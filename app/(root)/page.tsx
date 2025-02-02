@@ -3,10 +3,12 @@
 import { IdeaDashboard } from '@/components/dashboard/IdeaDashboard';
 import { NotificationHub } from '@/components/notifications/NotificationHub';
 import { TrendingIdeas } from '@/components/ideas/TrendingIdeas';
+import Sidebar from '@/components/Sidebar';
+import { getCurrentUser } from '@/lib/appwrite/actions/user.actions';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
       {/* Header */}
       {/* <header className="bg-white border-b sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white">
@@ -31,7 +33,7 @@ export default function Home() {
 
           {/* Sidebar */}
           <div className="lg:col-span-1 space-y-6">
-            <TrendingIdeas />
+            {/* <TrendingIdeas /> */}
             {/* Add other sidebar components here */}
           </div>
         </div>

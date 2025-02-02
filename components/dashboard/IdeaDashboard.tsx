@@ -4,12 +4,13 @@ import React, { useState } from 'react';
 import { Badge, Reminder } from '@/lib/types';
 import { BadgeCard } from '@/components/badges/BadgeCard';
 import { ReminderCard } from '@/components/reminders/ReminderCard';
-import { CategoryPieChart } from '@/components/dashboard/CategoryPieChart';
+// import { CategoryPieChart } from '@/components/dashboard/CategoryPieChart';
 import { Button } from '@/components/ui/button';
 import { Plus, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { CategoryPieChart } from './CategoryPieChart';
 
 export function IdeaDashboard() {
   const [badges, setBadges] = useState<Badge[]>([
@@ -94,7 +95,7 @@ export function IdeaDashboard() {
     <div className="p-6">
       <h1 className="text-3xl font-bold text-purple-600 mb-8">Dashboard</h1>
 
-      <div className="space-y-6">
+      <div className=" space-y-6">
         {/* Row 1: Pie Chart and Badges */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Category Chart */}

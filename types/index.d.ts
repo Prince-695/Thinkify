@@ -1,0 +1,1 @@
+declare type FileType = 'my-ideas' | 'trending-ideas' | 'leaderboard';

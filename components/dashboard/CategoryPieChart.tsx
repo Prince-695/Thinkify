@@ -17,7 +17,7 @@ export function CategoryPieChart({ data }: CategoryPieChartProps) {
       <h2 className="text-xl font-semibold mb-6">Ideas by Category</h2>
       <div className="h-[300px]">
         <ResponsiveContainer width="100%" height="100%">
-          <PieChart>
+          <PieChart width={400} height={400}>
             <Pie
               data={data}
               cx="50%"

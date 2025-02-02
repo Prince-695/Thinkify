@@ -6,8 +6,15 @@ import { ThumbsUp, MessageCircle, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { IdeaWithStats } from '@/lib/types';
 
+interface DataItem {
+  id: string;
+  likes: number;
+}
+
 export function IdeaList() {
+  const [data, setData] = useState<DataItem[]>([]);
   const [ideas, setIdeas] = useState<IdeaWithStats[]>([
+    
     {
       id: '1',
       title: 'Smart City Planning',
@@ -31,6 +38,24 @@ export function IdeaList() {
     );
   };
 
+  const handleLike = async (id: string) => {
+    try {
+      const response = await fetch(`/api/dashboard/${id}/like`, {
+        method: 'POST',
+      });
+      if (!response.ok) {
+        throw new Error('Failed to update likes');
+      }
+      setData(data.map(item => 
+        item.id === id ? { ...item, likes: item.likes + 1 } : item
+      ));
+    } catch (err) {
+      console.error('Error updating likes:', err);
+    }
+  };
+
+
+
   return (
     <div className="space-y-6">
       {ideas.map((idea) => (
@@ -53,15 +78,15 @@ export function IdeaList() {
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleVote(idea.id)}
-                    className="flex items-center gap-2 text-gray-600 hover:text-purple-600"
-                  >
-                    <ThumbsUp className="w-4 h-4" />
-                    <span>{idea.score}</span>
-                  </Button>
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={(e) => { e.stopPropagation(); handleLike(idea.id); }}
+                  className="flex items-center gap-2"
+                >
+                  <ThumbsUp className="h-4 w-4" />
+                  <span>{idea.likes}</span>
+                </Button>
 
                   <Button
                     variant="ghost"

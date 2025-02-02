@@ -1,8 +1,9 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { TrendingUp, ThumbsUp, MessageSquare, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { ideaStorage } from '@/storage/index';
 
 interface Idea {
   id: string;
@@ -19,35 +20,70 @@ interface Idea {
 }
 
 export function TrendingIdeas() {
-  // Mock data - replace with real data from your backend
-  const trendingIdeas: Idea[] = [
-    {
-      id: '1',
-      title: 'AI-Powered Smart City Infrastructure',
-      description: 'Using artificial intelligence to optimize city resources and improve citizen life quality.',
-      author: {
-        name: 'John Doe',
-        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John',
-      },
-      likes: 156,
-      comments: 32,
-      category: 'Technology',
-      trending_score: 98,
-    },
-    {
-      id: '2',
-      title: 'Sustainable Energy Grid',
-      description: 'A decentralized energy system that combines renewable sources with AI-driven optimization for maximum efficiency.',
-      author: {
-        name: 'Jane Smith',
-        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jane',
-      },
-      likes: 142,
-      comments: 28,
-      category: 'Energy',
-      trending_score: 92,
-    },
+  const [trendingIdeas, setTrendingIdeas] = useState<Idea[]>([]);
+  const avatars = [
+    'https://api.dicebear.com/7.x/avataaars/svg?seed=Alice',
+    'https://api.dicebear.com/7.x/avataaars/svg?seed=Bob',
+    'https://api.dicebear.com/7.x/avataaars/svg?seed=Charlie',
+    'https://api.dicebear.com/7.x/avataaars/svg?seed=David',
   ];
+
+  useEffect(() => {
+    const fetchTrendingIdeas = async () => {
+      const storedIdeas = await ideaStorage.getAllIdeas();
+      const formattedIdeas = storedIdeas.map((idea, index) => ({
+        id: idea.id,
+        title: idea.userInput,
+        description: idea.aiOutput,
+        author: {
+          name: `User ${index + 1}`,
+          avatar: avatars[index % avatars.length], // Rotate avatars
+        },
+        likes: idea.likes || Math.floor(Math.random() * 200),
+        comments: Math.floor(Math.random() * 50),
+        category: 'General',
+        trending_score: Math.floor(Math.random() * 100),
+      }));
+
+      // Merge with mock trending ideas
+      const allIdeas = [
+        ...formattedIdeas,
+        {
+          id: '1',
+          title: 'AI-Powered Smart City Infrastructure',
+          description:
+            'Using artificial intelligence to optimize city resources and improve citizen life quality.',
+          author: {
+            name: 'John Doe',
+            avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John',
+          },
+          likes: 156,
+          comments: 32,
+          category: 'Technology',
+          trending_score: 98,
+        },
+        {
+          id: '2',
+          title: 'Sustainable Energy Grid',
+          description:
+            'A decentralized energy system that combines renewable sources with AI-driven optimization for maximum efficiency.',
+          author: {
+            name: 'Jane Smith',
+            avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jane',
+          },
+          likes: 142,
+          comments: 28,
+          category: 'Energy',
+          trending_score: 92,
+        },
+      ];
+
+      // Sort by trending score
+      setTrendingIdeas(allIdeas.sort((a, b) => b.trending_score - a.trending_score));
+    };
+
+    fetchTrendingIdeas();
+  }, []);
 
   return (
     <div className="p-6">
@@ -77,9 +113,9 @@ export function TrendingIdeas() {
                     <p className="text-sm text-gray-600">by {idea.author.name}</p>
                   </div>
                 </div>
-                
+
                 <p className="text-gray-600 mb-4">{idea.description}</p>
-                
+
                 <div className="flex items-center gap-6">
                   <div className="flex items-center gap-2 text-gray-500">
                     <ThumbsUp className="h-5 w-5" />
@@ -107,4 +143,4 @@ export function TrendingIdeas() {
       </div>
     </div>
   );
-} 
+}

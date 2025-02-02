@@ -16,8 +16,8 @@ const Header = ({userId, accountId} : {userId : string; accountId : string;}) =>
             "use server";
             await signOutUser();
             }}>
-            <Button type='submit' className='sign-out-button'>
-                {/* <Image src='/assets/icons/logout.svg' alt='Logout' width={24} height={24} className='w-6'  /> */}SIGN OUT
+            <Button type='submit' className='p-5 text-[18px] shadow-md hover:transition-transform hover:transform hover:scale-105 duration-300'>
+                {/* <Image src='/assets/icons/logout.svg' alt='Logout' width={24} height={24} className='w-6'  /> */}Sign Out
             </Button>
         </form>
     </div>
