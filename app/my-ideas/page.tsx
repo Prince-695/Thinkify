@@ -15,7 +15,7 @@ const MyIdeasPage = async () => {
 
       <IdeasGrid />
       </div>
-      <div className='ml-[1100px] top-0 fixed '>
+      <div className='ml-[1150px] top-0 fixed '>
       <Sidebar {...currentUser}  />
       
     </div>
