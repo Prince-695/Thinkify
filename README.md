@@ -17,6 +17,9 @@
 
 **Thinkify** is an idea analysis and brainstorming platform designed to help users generate, refine, and validate their business and project ideas. The platform provides a structured framework to analyze ideas in-depth, including competitive analysis, suggestions for improvement, and actionable implementation steps. Additionally, the platform allows users to receive notifications and set alarms for reviewing their ideas, enhancing engagement and idea progression.
 
+## YT Video
+**Link**: https://youtu.be/w8hZm_c8CUw
+
 ---
 
 ## Features
