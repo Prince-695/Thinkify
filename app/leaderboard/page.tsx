@@ -1,8 +1,9 @@
 import React from 'react';
 import { TrendingIdeas } from '@/components/trending/TrendingIdeas';
 import { Leaderboard } from '@/components/leaderboard/Leaderboard';
-import { IdeaList } from '@/components/leaderboard/IdeaList';
+// import { IdeaList } from '@/components/leaderboard/IdeaList';
 import { UserStats } from '@/lib/types';
+import { IdeaList } from '@/components/leaderboard/IdeaList';
 
 export default function LeaderboardPage() {
   const mockUsers: UserStats[] = [

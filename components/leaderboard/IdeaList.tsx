@@ -1,11 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ThumbsUp, MessageCircle, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { IdeaWithStats } from '@/lib/types';
+import { ideaStorage } from '@/storage/index';
 
+// Interface for the idea item, extending from your data structure
 interface DataItem {
   id: string;
   likes: number;
@@ -13,31 +15,23 @@ interface DataItem {
 
 export function IdeaList() {
   const [data, setData] = useState<DataItem[]>([]);
-  const [ideas, setIdeas] = useState<IdeaWithStats[]>([
-    
-    {
-      id: '1',
-      title: 'Smart City Planning',
-      description: 'An AI-powered system that optimizes city infrastructure and resource allocation based on real-time data and citizen needs.',
-      category: 'Urban Development',
-      createdAt: new Date(),
-      status: 'in_progress',
-      score: 42,
-      interactions: 12,
-    },
-    // Add more sample ideas...
-  ]);
+  const [ideas, setIdeas] = useState<IdeaWithStats[]>([]);
 
-  const handleVote = (ideaId: string) => {
-    setIdeas(prev =>
-      prev.map(idea =>
-        idea.id === ideaId
-          ? { ...idea, score: idea.score + 1 }
-          : idea
-      )
-    );
-  };
+  // Fetch ideas on component mount
+  useEffect(() => {
+    const fetchIdeas = async () => {
+      try {
+        const ideasFromStorage = await ideaStorage.getAllIdeas();
+        setIdeas(ideasFromStorage);
+      } catch (error) {
+        console.error('Error fetching ideas:', error);
+      }
+    };
 
+    fetchIdeas();
+  }, []);
+
+  // Handle liking an idea
   const handleLike = async (id: string) => {
     try {
       const response = await fetch(`/api/dashboard/${id}/like`, {
@@ -46,15 +40,23 @@ export function IdeaList() {
       if (!response.ok) {
         throw new Error('Failed to update likes');
       }
-      setData(data.map(item => 
-        item.id === id ? { ...item, likes: item.likes + 1 } : item
-      ));
+
+      // Update the likes count in state
+      setData((prevData) =>
+        prevData.map((item) =>
+          item.id === id ? { ...item, likes: item.likes + 1 } : item
+        )
+      );
+
+      // Update the list of ideas as well
+      const updatedIdeas = ideas.map((idea) =>
+        idea.id === id ? { ...idea, likes: idea.likes + 1 } : idea
+      );
+      setIdeas(updatedIdeas);
     } catch (err) {
       console.error('Error updating likes:', err);
     }
   };
-
-
 
   return (
     <div className="space-y-6">
@@ -78,15 +80,18 @@ export function IdeaList() {
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                <Button 
-                  variant="ghost" 
-                  size="sm"
-                  onClick={(e) => { e.stopPropagation(); handleLike(idea.id); }}
-                  className="flex items-center gap-2"
-                >
-                  <ThumbsUp className="h-4 w-4" />
-                  <span>{idea.likes}</span>
-                </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleLike(idea.id);
+                    }}
+                    className="flex items-center gap-2"
+                  >
+                    <ThumbsUp className="h-4 w-4" />
+                    <span>{idea.likes}</span>
+                  </Button>
 
                   <Button
                     variant="ghost"
@@ -113,4 +118,4 @@ export function IdeaList() {
       ))}
     </div>
   );
-} 
+}
