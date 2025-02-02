@@ -142,11 +142,11 @@ async function loadIdeas() {
 
 ## Deployment
 1. **Backend Deployment**:
-   - Host **Appwrite** on Appwrite Cloud or self-host it using Docker.
+   - Host **Appwrite** on Appwrite Cloud.
    - Set up appropriate environment variables like the `APPWRITE_ENDPOINT` and `APPWRITE_PROJECT_ID`.
 
 2. **Frontend Deployment**:
-   - Host the React frontend on platforms like **Vercel**, **Netlify**, or **AWS S3**.
+   - Host the React frontend on platforms like **Vercel**.
    - Connect the frontend with the backend API using **fetch** or **Axios**.
 
 ---
@@ -160,4 +160,4 @@ async function loadIdeas() {
 ### Contributors
 - [Vrajesh Sharma](https://github.com/Vrajesh-Sharma) - AI Lead and Full Stack Developer
 - [Prince Rathod](https://github.com/Prince-695) - Team Lead and Full Stack Developer
-- [Vatsal Patel](https://github.com/Vatsal-Patel-09) - UI/UX developer 
+- [Vatsal Patel](https://github.com/Vatsal-Patel-09) - Marketing Lead and AI/backend developer 
